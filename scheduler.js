@@ -1,27 +1,43 @@
-$("#currentDay").text(luxon.DateTime.local().toLocaleString({ weekday: 'long', month: 'long', day: '2-digit' }));
-
-let currentTime = luxon.DateTime.local({
-    hour: "2-digit",
-  });
+// To grab current date 
+let currentTime = luxon.DateTime.local();
   $("#currentDay").text(luxon.DateTime.local().toLocaleString({ weekday: 'long', month: 'long', day: '2-digit' }));
 
+function checkTime(){
+  var timeNow= currentTime.hour
+  console.log(timeNow)
 
-
-function timeNow(){
-    let fixedHour = parseInt(moment().format("H"));
-    //add color to each time block depending on the time
-$(".time-block").each(function(){
-    let presentHour = parseInt($(this).attr("id"));
+  $(".time-block").each(function(){
+  var blockHour = parseInt($(this).attr("id"))
   
-    if(fixedHour > presentHour){
-      $(this).addClass("past");
-    } else if (presentHour === fixedHour){
-      $(this).addClass("present");
-    } else { (presentHour < fixedHour)
-      $(this).addClass("future");
-    }
-    });
-    }; 
+  // console.log(blockHour)
+  if(blockHour < timeNow){
+    $(this).addClass("past")
+  }else if (blockHour === timeNow){
+    $(this).removeClass("past")
+    $(this).removeClass("future")
+    $(this).addClass("present")
+  } else {
+    $(this).removeClass("past")
+    $(this).removeClass("present")
+    $(this).addClass("future")
+  }
+})
+  
+}
+
+checkTime()
+
+// click saved button to store in local storage
+
+var saveBtn = $(".saveBtn")
+$(".saveBtn").on("click", function(){
+  console.log("I cliked the button!")
+  
+  let timeTable = $(this).siblings(".hour").text();
+  let text= $(this).siblings("#textarea").val();
+
+  localStorage.setItem(timeTable, text)
+})
 
 
 
