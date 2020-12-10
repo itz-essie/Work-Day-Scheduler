@@ -39,7 +39,18 @@ $(".saveBtn").on("click", function(){
   localStorage.setItem(timeTable, text)
 })
 
+function storedItem (){
+  $(".hour").each(function(){
+    let currentHour = $(this).text()
+    let storedItem = localStorage.getItem(currentHour)
 
+    if (storedItem !== null) {
+      $(this).siblings("textarea").val(storedItem)
+    }
+  })
+}
+
+storedItem()
 
 /*WHEN I view the time blocks for that day
 THEN each time block is color-coded to indicate whether it is in the past, present, or future
